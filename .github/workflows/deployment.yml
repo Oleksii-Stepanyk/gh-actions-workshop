@@ -13,9 +13,9 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v3
 
-    - name: Apply manifest
-      uses: cross-the-world/ssh-scp-ssh-pipelines@latest
-	with:
+    - name: ssh-scp-ssh-pipelines
+      uses: cross-the-world/ssh-scp-ssh-pipelines@v1.1.4
+      with:
         host: ${{ secrets.EC2_IP }}
         user: ubuntu
         pass: ${{ secrets.PUB_KEY }}
@@ -28,5 +28,5 @@ jobs:
         nodeport.yaml => /home/ubuntu/
       last_ssh: |
         cd ~
-		kubectl apply -f app.yaml
-		kubectl apply -f nodeport.yaml
+	kubectl apply -f app.yaml
+	kubectl apply -f nodeport.yaml
