@@ -12,22 +12,20 @@ jobs:
     steps:
     - name: Checkout Code
       uses: actions/checkout@v3
+      
+    - name: Create SSH Key
+      run: |
+        echo "${{ secrets.PUB_KEY }}" > pubkey.pem
+        chmod 777 pubkey.pem
 
-    - name: SSH and Apply config
-      uses: cross-the-world/ssh-scp-ssh-pipelines@v1.1.4
-      with:
-        host: ${{ secrets.EC2_IP }}
-        user: ubuntu
-        key: ${{ secrets.PUB_KEY }}
-        port: 22
-        connect_timeout: 10s
-        first_ssh: |
-          echo "Test"
-        scp: |
-          app.yaml => /home/ubuntu/
-          nodeport.yaml => /home/ubuntu/
-        last_ssh: |
-          cd ~
+    - name: Copy files to EC2
+      run: |
+        scp -i pubkey.pem app.yaml ubuntu@${{ secrets.EC2_IP }}:/home/ubuntu/
+        scp -i pubkey.pem nodeport.yaml ubuntu@${{ secrets.EC2_IP }}:/home/ubuntu/
+    - name: SSH to EC2
+      run: |
+        ssh -i pubkey.pem ubuntu@${{ secrets.EC2_IP }} << 'EOF'
           kubectl apply -f app.yaml
           kubectl apply -f nodeport.yaml
-#trigger
+        EOF
+      
