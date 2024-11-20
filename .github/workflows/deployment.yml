@@ -35,3 +35,4 @@ jobs:
           cd ~
           kubectl apply -f app.yaml
           kubectl apply -f nodeport.yaml
+#trigger
