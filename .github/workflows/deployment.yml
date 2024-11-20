@@ -18,7 +18,7 @@ jobs:
       with:
         host: ${{ secrets.EC2_IP }}
         user: ubuntu
-        pass: ${{ secrets.PUB_KEY }}
+        key: ${{ secrets.PUB_KEY }}
         port: 22
         connect_timeout: 10s
         first_ssh: |
