@@ -22,11 +22,11 @@ jobs:
         port: 22
         connect_timeout: 10s
         first_ssh: |
-	  echo "Test"
+          echo "Test"
         scp: |
           app.yaml => /home/ubuntu/
           nodeport.yaml => /home/ubuntu/
         last_ssh: |
           cd ~
-	  kubectl apply -f app.yaml
-	  kubectl apply -f nodeport.yaml
+          kubectl apply -f app.yaml
+          kubectl apply -f nodeport.yaml
