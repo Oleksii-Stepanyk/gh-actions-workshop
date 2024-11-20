@@ -12,19 +12,13 @@ jobs:
     steps:
     - name: Checkout Code
       uses: actions/checkout@v3
-      
-    - name: Create SSH Key
-      run: |
-        echo "${{ secrets.PUB_KEY }}" > pubkey.pem
-        chmod 777 pubkey.pem
-
     - name: Copy files to EC2
       run: |
-        scp -i pubkey.pem app.yaml ubuntu@${{ secrets.EC2_IP }}:/home/ubuntu/
-        scp -i pubkey.pem nodeport.yaml ubuntu@${{ secrets.EC2_IP }}:/home/ubuntu/
+        scp -i ${{ secrets.PUB_KEY }} app.yaml ubuntu@${{ secrets.EC2_IP }}:/home/ubuntu/
+        scp -i ${{ secrets.PUB_KEY }} nodeport.yaml ubuntu@${{ secrets.EC2_IP }}:/home/ubuntu/
     - name: SSH to EC2
       run: |
-        ssh -i pubkey.pem ubuntu@${{ secrets.EC2_IP }} << 'EOF'
+        ssh -i ${{ secrets.PUB_KEY }} ubuntu@${{ secrets.EC2_IP }} << 'EOF'
           kubectl apply -f app.yaml
           kubectl apply -f nodeport.yaml
         EOF
