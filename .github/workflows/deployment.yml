@@ -13,12 +13,17 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v3
 
-    - name: ssh-scp-ssh-pipelines
+    - name: Create SSH Key
+      run: |
+        echo "${{ secrets.PUB_KEY }}" > pubkey.pem
+        chmod 777 pubkey.pem
+
+    - name: SSH and Apply config
       uses: cross-the-world/ssh-scp-ssh-pipelines@v1.1.4
       with:
         host: ${{ secrets.EC2_IP }}
         user: ubuntu
-        key: ${{ secrets.PUB_KEY }}
+        key: pubkey.pem
         port: 22
         connect_timeout: 10s
         first_ssh: |
