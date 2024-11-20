@@ -15,14 +15,14 @@ jobs:
 
     - name: Apply manifest
       uses: cross-the-world/ssh-scp-ssh-pipelines@latest
-	  with:
+	with:
         host: ${{ secrets.EC2_IP }}
         user: ubuntu
         pass: ${{ secrets.PUB_KEY }}
         port: 22
         connect_timeout: 10s
       first_ssh: |
-		echo "Test"
+	echo "Test"
       scp: |
         app.yaml => /home/ubuntu/
         nodeport.yaml => /home/ubuntu/
