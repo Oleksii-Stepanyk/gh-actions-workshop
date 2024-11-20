@@ -1,0 +1,32 @@
+name: Apply
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  apply:
+    name: Apply new config
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Apply manifest
+      uses: cross-the-world/ssh-scp-ssh-pipelines@latest
+	  with:
+        host: ${{ secrets.EC2_IP }}
+        user: ubuntu
+        pass: ${{ secrets.PUB_KEY }}
+        port: 22
+        connect_timeout: 10s
+      first_ssh: |
+		echo "Test"
+      scp: |
+        app.yaml => /home/ubuntu/
+        nodeport.yaml => /home/ubuntu/
+      last_ssh: |
+        cd ~
+		kubectl apply -f app.yaml
+		kubectl apply -f nodeport.yaml
