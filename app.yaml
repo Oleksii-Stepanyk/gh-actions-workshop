@@ -13,6 +13,6 @@ spec:
     spec:
       containers:
       - name: task-container
-        image: ghcr.io/oleksii-stepanyk/gh-actions-workshop:fe557c7
+        image: ghcr.io/oleksii-stepanyk/gh-actions-workshop:bc5d627
         ports:
         - containerPort: 8080
