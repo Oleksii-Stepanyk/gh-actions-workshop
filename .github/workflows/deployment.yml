@@ -18,8 +18,6 @@ jobs:
        host: ${{ secrets.EC2_IP }}
        user: "ubuntu"
        key: ${{ secrets.PUB_KEY }}
-       local: '.'
-       remote: /home/ubuntu/
        scp: |
          app.yaml => "/home/ubuntu/"
          nodeport.yaml => "/home/ubuntu/"
