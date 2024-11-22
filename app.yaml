@@ -13,9 +13,6 @@ spec:
     spec:
       containers:
       - name: task-container
-        image: ghcr.io/oleksii-stepanyk/gh-actions-workshop:dc5063b
+        image: ghcr.io/oleksii-stepanyk/gh-actions-workshop:fe557c7
         ports:
-        - containerPort: 3000
-        env:
-        - name: NODE_ENV
-          value: "production"
+        - containerPort: 8080
